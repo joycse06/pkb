@@ -46,5 +46,3 @@ test_generateTree = do
 
 test_generateTrees :: IO [TestTree]
 test_generateTrees = map (\ s -> testCase s $ pure ()) <$> pure ["First input", "Second input"]
-
-
