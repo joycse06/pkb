@@ -1,8 +1,8 @@
-name:                spock-pkb
+name:                pkb
 version:             0.1.0.0
 -- synopsis:
 -- description:
-homepage:            https://github.com/joycse06/spock-pkb#readme
+homepage:            https://github.com/joycse06/pkb#readme
 license:             BSD3
 license-file:        LICENSE
 author:              Joy Nag
@@ -13,9 +13,10 @@ build-type:          Simple
 extra-source-files:  README.md
 cabal-version:       >=1.10
 
-executable spock-pkb
+library
+  exposed-modules:
+                       Pkb
   hs-source-dirs:      src
-  main-is:             Main.hs
   default-language:    Haskell2010
   build-depends:       base >= 4.7 && < 5
                      , Spock >= 0.11
@@ -26,27 +27,54 @@ executable spock-pkb
                      , blaze-html
                      , lucid
                      , Spock-lucid
+                     , wai
+                     , wai-extra
+
+
+
+executable pkb-exe
+  hs-source-dirs:      bin
+  main-is:             Main.hs
+  default-language:    Haskell2010
+  build-depends:       base >= 4.7 && < 5
+                     , pkb
 
 test-suite           tasty
   type:
                      exitcode-stdio-1.0
   main-is:
-                     TastyLoader.hs
-  other-modules:
-                     Pkb.MainTest
+                     Driver.hs
   default-language:
                      Haskell2010
-
+  hs-source-dirs:
+                    specs
   build-depends:
                      base < 5 && >= 3
+                     , pkb
+                     , Spock >= 0.11
+                     , mtl
+                     , text
+                     , cheapskate
+                     , skylighting
+                     , blaze-html
+                     , lucid
+                     , Spock-lucid
+                     , pkb
+                     , wai
+                     , wai-extra
                      , HUnit >= 1.5
                      , QuickCheck >= 2.9
+                     , hspec >= 2.4.8
+                     , hspec-wai
                      , tasty >= 1
+                     , tasty-discover
                      , tasty-hunit >= 0.9
+                     , tasty-hspec >= 1.1.0
                      , tasty-quickcheck >= 0.8
+  other-modules:
+                    Pkb.MainSpec
 
   ghc-options:
                     -Wall
                     -threaded
-  hs-source-dirs:
-                    specs
+

@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Main where
+module Pkb where
 
 import Web.Spock
 import Web.Spock.Config
@@ -13,6 +13,7 @@ import Data.Text.Lazy as TL
 import Cheapskate
 import qualified Text.Blaze.Html as BL
 import Text.Blaze.Html.Renderer.Text
+import Network.Wai (Middleware)
 
 data PkbSession = EmptySession
 data PkbState = PkbState
@@ -29,17 +30,24 @@ toMarkdown sText = BL.toHtml . markdown def $ TL.toStrict sText
 convertToHtml :: BL.Html -> T.Text
 convertToHtml rawHtml = TL.toStrict $ renderHtml rawHtml
 
-main :: IO ()
-main =
+runApp :: IO ()
+runApp =
     do ref <- newIORef 0
-       spockCfg <- defaultSpockCfg EmptySession PCNoDatabase PkbState
-       runSpock 8080 (spock spockCfg pkbApp)
+       runSpock 8080 pkbApp
 
-pkbApp :: SpockM () PkbSession PkbState ()
+pkbApp :: IO Middleware
 pkbApp =
+  do
+    spockCfg <- defaultSpockCfg EmptySession PCNoDatabase PkbState
+    spock spockCfg routes
+
+
+routes :: SpockM () PkbSession PkbState ()
+routes =
     do get root $
            text "Hello World!"
        get ("pages" <//> wildcard) $ \path ->
          do
            rawMarkdown <- liftIO rawMarkdownFile
            html $ convertToHtml $ toMarkdown ( TL.fromStrict rawMarkdown)
+
