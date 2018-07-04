@@ -1,22 +1,12 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings #-}
-module Pkb.MainSpec where
 
-import           Pkb (pkbApp)
+module Pkb.ExampleSpec where
+
 import           Test.Tasty
 import           Test.Hspec
-import           Test.Hspec.Wai
-import           Web.Spock (spockAsApp)
 import           Test.Tasty.HUnit
 import           Test.Tasty.QuickCheck
-
-
-spec_integration :: Spec
-spec_integration =
-  with (spockAsApp pkbApp) $
-    do describe "GET /" $
-        do it "Serves the home page" $
-            get "/" `shouldRespondWith` "Hello World!" { matchStatus = 200 }
 
 unit_listCompare :: IO ()
 unit_listCompare = [1 :: Int, 2, 3] `compare` [1,2] @?= GT

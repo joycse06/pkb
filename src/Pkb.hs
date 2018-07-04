@@ -13,22 +13,16 @@ import Data.Text.Lazy as TL
 import Cheapskate
 import qualified Text.Blaze.Html as BL
 import Text.Blaze.Html.Renderer.Text
+import qualified Network.Wai.Middleware.Static as S
 import Network.Wai (Middleware)
-
-data PkbSession = EmptySession
-data PkbState = PkbState
-
-rawMarkdownFile :: IO T.Text
-rawMarkdownFile = do
-  contents <- readFile "pages/home.md"
-  let sText = T.pack contents
-  return sText
-
-toMarkdown :: Text -> BL.Html
-toMarkdown sText = BL.toHtml . markdown def $ TL.toStrict sText
-
-convertToHtml :: BL.Html -> T.Text
-convertToHtml rawHtml = TL.toStrict $ renderHtml rawHtml
+import System.Directory
+import Network.Wai.Middleware.RequestLogger
+import Pkb.Web.View.Home
+import Pkb.Lib.Markdown as M
+import CMark as CM
+import Pkb.Web.Handler.Home
+import Pkb.Types
+import qualified Pkb.Web.Routes as PR
 
 runApp :: IO ()
 runApp =
@@ -44,10 +38,18 @@ pkbApp =
 
 routes :: SpockM () PkbSession PkbState ()
 routes =
-    do get root $
-           text "Hello World!"
-       get ("pages" <//> wildcard) $ \path ->
-         do
-           rawMarkdown <- liftIO rawMarkdownFile
-           html $ convertToHtml $ toMarkdown ( TL.fromStrict rawMarkdown)
+    do
+      -- liftIO $ putStrLn "Hello"
+      -- currentDir <- liftIO System.Directory.getCurrentDirectory
+      -- liftIO $ putStrLn currentDir
 
+      middleware logStdoutDev
+      middleware (S.staticPolicy (S.addBase "static"))
+      PR.routes
+
+      -- get root getHome
+      --
+      -- get ("pages" <//> wildcard) $ \path ->
+      --    do
+      --      rawMarkdown <- liftIO (M.rawMarkdownFromFile "pages/home.md")
+      --      lucid $ M.markdownToHtmlByCmark (rawMarkdown)
