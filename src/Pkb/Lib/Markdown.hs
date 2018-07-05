@@ -15,10 +15,6 @@ import Lucid
 import Cheapskate
 import Text.Blaze.Html.Renderer.Text
 
--- renderMarkDownFile :: FilePath -> Html ()
--- renderMarkDownFile filePath = do
---   markdownToHtmlByCmark (rawMarkdownFromFile filePath)
-
 markdownToHtmlByCmark :: T.Text -> Html ()
 markdownToHtmlByCmark sText = do
   renderNode [] (CM.commonmarkToNode [] sText)
