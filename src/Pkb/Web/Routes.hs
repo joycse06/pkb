@@ -19,15 +19,3 @@ routes = do
 
 -- pageRoute :: Path '[String] Closed
 pageRoute = "pages" <//> wildcard
-
--- taxRateRoute :: Path '[CountryCode, StateCode] Open
--- taxRateRoute = "tax_rates" <//> var <//> var
---
---
--- taxRateRouteResponse :: (Monad m, HasSpock m, SpockConn m ~ SqlBackend)
---                      => CountryCode -> StateCode -> m TaxRule
--- taxRateRouteResponse cCode sCode = do
---   rules <- allTaxRules
---   let matchCriteria = (cCode, sCode)
---   pure $ taxRuleOrDefault matchCriteria rules
-

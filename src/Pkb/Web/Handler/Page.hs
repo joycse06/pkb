@@ -13,5 +13,6 @@ import qualified Data.Text as T
 
 getPage :: T.Text -> PkbAction ctx a
 getPage pagePath = do
-  rawMarkdown <- liftIO (M.rawMarkdownFromFile "pages/home.md")
+  liftIO $ putStrLn (T.unpack pagePath)
+  rawMarkdown <- liftIO (M.rawMarkdownFromFile ("pages/" ++ T.unpack pagePath))
   lucid $ pageView (M.markdownToHtmlByCmark (rawMarkdown))
