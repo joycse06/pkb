@@ -10,7 +10,6 @@ import Pkb.Web.View.Site (siteView)
 homeView :: Html ()
 homeView = do
   siteView $ do
-    -- div_ do
       h2_ "This is my Personal Knowledge Base"
       p_ "I will be storing all sorts of things here."
       div_ [ class_ "line" ] $ ""

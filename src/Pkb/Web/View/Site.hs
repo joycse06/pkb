@@ -39,9 +39,8 @@ siteView body =
                   i_ [ class_ "fas fa-question" ] $ ""
                   " FAQ"
               ul_ [ class_ "list-unstyled CTAs" ] $ do
-              ""
-              li_ $ do
-                a_ [ href_ "https://joycse06.github.io"] $ "My Blog"
+                li_ $ do
+                  a_ [ href_ "https://joycse06.github.io"] $ "My Blog"
           div_ [ id_ "content" ] $ do
             nav_ [ class_ "navbar navbar-expand-lg navbar-light bg-light" ] $ do
               div_ [ class_ "container-fluid" ] $ do

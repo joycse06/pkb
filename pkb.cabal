@@ -16,6 +16,18 @@ cabal-version:       >=1.10
 library
   exposed-modules:
                        Pkb
+  other-modules:
+                Pkb.Lib.Markdown
+                Pkb.Lib.Frontmatter
+                Pkb.Types
+                Pkb.Sandbox
+                Pkb.Web.Handler.Home
+                Pkb.Web.Handler.Page
+                Pkb.Web.Routes
+                Pkb.Web.View.Home
+                Pkb.Web.View.Page
+                Pkb.Web.View.Site
+
   hs-source-dirs:      src
   default-language:    Haskell2010
   build-depends:       base >= 4.7 && < 5
@@ -33,6 +45,13 @@ library
                      , wai-middleware-static
                      , directory
                      , cmark
+                     , shelly
+                     , filepath
+                     , filemanip
+                     , pathwalk
+                     , attoparsec
+                     , yaml
+                     , bytestring
 
 executable pkb-exe
   hs-source-dirs:      bin
@@ -68,14 +87,19 @@ test-suite           tasty
                      , QuickCheck >= 2.9
                      , hspec >= 2.4.8
                      , hspec-wai
+                     , pathwalk
                      , tasty >= 1
                      , tasty-discover
                      , tasty-hunit >= 0.9
                      , tasty-hspec >= 1.1.0
                      , tasty-quickcheck >= 0.8
+                     , attoparsec
+                     , yaml
+                     , bytestring
+
   other-modules:
-                    Pkb.AppSpec
-                    Pkb.ExampleSpec
+                Pkb.AppSpec
+                Pkb.ExampleSpec
 
   ghc-options:
                     -Wall
