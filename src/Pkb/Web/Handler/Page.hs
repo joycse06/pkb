@@ -26,6 +26,7 @@ getPage pagePath = do
   let pagePaths  = fmap relativePath pages
   liftIO $ putStrLn (show pagePaths)
   liftIO $ putStrLn (T.unpack ("Found page: " <> (maybe "Not Found" relativePath foundPage)))
+  liftIO $ putStrLn (T.unpack (maybe "Not Found" rawMarkdown foundPage))
   let page = fromMaybe (pages !! 1) foundPage
   liftIO $ putStrLn ("Page relativePath: " ++ (T.unpack (relativePath page)))
   lucid $ pageView (M.markdownToHtmlByCmark (rawMarkdown page))

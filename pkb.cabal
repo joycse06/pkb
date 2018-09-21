@@ -52,6 +52,7 @@ library
                      , attoparsec
                      , yaml
                      , bytestring
+                     , full-text-search
 
 executable pkb-exe
   hs-source-dirs:      bin

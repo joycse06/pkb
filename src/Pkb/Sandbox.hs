@@ -70,7 +70,7 @@ rawMarkDownFromContents :: T.Text -> T.Text
 rawMarkDownFromContents contents = do
   let markdownList = T.splitOn ("---\n")  contents
   if length markdownList < 3
-  then ("Empty Content")
+  then (contents)
   else markdownList !! 2
 
 renderHtmlFromPageContent :: T.Text -> Html ()
